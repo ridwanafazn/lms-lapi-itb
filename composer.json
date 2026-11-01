@@ -15,7 +15,6 @@
         "masbug/flysystem-google-drive-ext": "^2.4",
         "midtrans/midtrans-php": "^2.6",
         "simplesoftwareio/simple-qrcode": "^4.2",
-        "sentry/sentry": "^3.0",
         "spatie/laravel-medialibrary": "^11.17",
         "spatie/laravel-permission": "*",
         "yaza/laravel-google-drive-storage": "^3.0"

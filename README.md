@@ -224,7 +224,7 @@ Teknologi
 | Dokumen | barryvdh laravel-dompdf dan Simple QrCode |
 | Izin | Spatie Permission |
 | Antrean | Laravel Queue dengan driver basis data |
-| Pemantauan | Sentry |
+| Pemantauan | Log Laravel dan jejak audit di basis data |
 | Pengujian | PHPUnit 10, Laravel Pint, GitHub Actions |
 
 Struktur Proyek
