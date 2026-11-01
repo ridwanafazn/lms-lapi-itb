@@ -29,7 +29,7 @@ return new class extends Migration
                 'registration_deadline',
                 'quota',
                 'location',
-                'timeline_detail'
+                'timeline_detail',
             ]);
         });
     }

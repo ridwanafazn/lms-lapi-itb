@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasUuids;
+use Illuminate\Database\Eloquent\Model;
 
 class CourseTestimonial extends Model
 {

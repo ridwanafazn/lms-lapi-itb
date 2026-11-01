@@ -2,8 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -20,11 +20,11 @@ return new class extends Migration
         DB::table('batches')->orderBy('id')->chunk(100, function ($batches) {
             foreach ($batches as $batch) {
                 DB::table('batches')->where('id', $batch->id)->update([
-                    'new_registration_deadline' => $batch->registration_deadline 
+                    'new_registration_deadline' => $batch->registration_deadline
                         ? json_encode(['date' => $batch->registration_deadline]) : null,
-                    'new_start_date' => $batch->start_date 
+                    'new_start_date' => $batch->start_date
                         ? json_encode(['date' => $batch->start_date]) : null,
-                    'new_end_date' => $batch->end_date 
+                    'new_end_date' => $batch->end_date
                         ? json_encode(['date' => $batch->end_date]) : null,
                 ]);
             }

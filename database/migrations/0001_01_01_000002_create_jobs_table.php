@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         // 1. Cek tabel jobs (Standar Laravel Queue biasanya BigInt, kita biarkan default untuk safety driver)
-        if (!Schema::hasTable('jobs')) {
+        if (! Schema::hasTable('jobs')) {
             Schema::create('jobs', function (Blueprint $table) {
                 $table->id();
                 $table->string('queue')->index();
@@ -25,7 +25,7 @@ return new class extends Migration
         }
 
         // 2. Cek tabel job_batches
-        if (!Schema::hasTable('job_batches')) {
+        if (! Schema::hasTable('job_batches')) {
             Schema::create('job_batches', function (Blueprint $table) {
                 $table->string('id')->primary();
                 $table->string('name');
@@ -41,7 +41,7 @@ return new class extends Migration
         }
 
         // 3. Cek tabel failed_jobs (Kita ubah ke UUID agar konsisten dengan ID project)
-        if (!Schema::hasTable('failed_jobs')) {
+        if (! Schema::hasTable('failed_jobs')) {
             Schema::create('failed_jobs', function (Blueprint $table) {
                 $table->uuid('id')->primary(); // Full UUID
                 $table->string('uuid')->unique();

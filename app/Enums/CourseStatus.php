@@ -11,7 +11,7 @@ enum CourseStatus: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::DRAFT => 'Draft',
             self::PENDING => 'Menunggu Review',
             self::PUBLISHED => 'Tayang',
@@ -21,7 +21,7 @@ enum CourseStatus: string
 
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::DRAFT => 'gray',
             self::PENDING => 'amber',
             self::PUBLISHED => 'emerald',

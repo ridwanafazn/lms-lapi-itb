@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\Assignment;
-use App\Models\Batch;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Program;
@@ -11,7 +10,6 @@ use App\Models\Quiz;
 use App\Models\Section;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\RateLimiter;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
@@ -24,10 +22,11 @@ class Phase1PolicyRateLimitTest extends TestCase
         Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
         $user = User::create([
             'name' => 'Admin',
-            'email' => 'admin-' . uniqid() . '@example.test',
+            'email' => 'admin-'.uniqid().'@example.test',
             'password' => 'password',
         ]);
         $user->assignRole('admin');
+
         return $user;
     }
 
@@ -36,10 +35,11 @@ class Phase1PolicyRateLimitTest extends TestCase
         Role::firstOrCreate(['name' => 'student', 'guard_name' => 'web']);
         $user = User::create([
             'name' => 'Student',
-            'email' => 'student-' . uniqid() . '@example.test',
+            'email' => 'student-'.uniqid().'@example.test',
             'password' => 'password',
         ]);
         $user->assignRole('student');
+
         return $user;
     }
 

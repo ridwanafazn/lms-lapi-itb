@@ -41,8 +41,8 @@ class CoursePolicy
         // 3. Cek Instruktur Pendamping (Co-Instructor)
         // Kita cek ke database: Apakah user ini terdaftar di tabel relasi instructors untuk course ini?
         return $course->instructors()
-                      ->where('user_id', $user->id)
-                      ->exists();
+            ->where('user_id', $user->id)
+            ->exists();
     }
 
     /**

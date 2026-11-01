@@ -24,15 +24,15 @@ return new class extends Migration
 
             // 4. Tambahkan Relasi Foreign Key untuk program_id
             $table->foreign('program_id')
-                  ->references('id')
-                  ->on('programs')
-                  ->onDelete('cascade'); // Jika program dihapus, batch ikut terhapus
+                ->references('id')
+                ->on('programs')
+                ->onDelete('cascade'); // Jika program dihapus, batch ikut terhapus
 
             // 5. Pasang kembali Foreign Key untuk course_id (yang sekarang nullable)
             $table->foreign('course_id')
-                  ->references('id')
-                  ->on('courses')
-                  ->onDelete('cascade');
+                ->references('id')
+                ->on('courses')
+                ->onDelete('cascade');
         });
     }
 
@@ -55,9 +55,9 @@ return new class extends Migration
 
             // Pasang lagi FK lama
             $table->foreign('course_id')
-                  ->references('id')
-                  ->on('courses')
-                  ->onDelete('cascade');
+                ->references('id')
+                ->on('courses')
+                ->onDelete('cascade');
         });
     }
 };

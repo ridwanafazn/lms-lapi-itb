@@ -37,7 +37,7 @@ return new class extends Migration
                 'prerequisites',
                 'learning_outcomes',
                 'language',
-                'curriculum_summary'
+                'curriculum_summary',
             ]);
         });
     }

@@ -39,36 +39,36 @@ return new class extends Migration
         // Add FK baru mengarah ke sections
         Schema::table('lessons', function (Blueprint $table) {
             $table->foreign('section_id')
-                  ->references('id')->on('sections')
-                  ->cascadeOnDelete();
+                ->references('id')->on('sections')
+                ->cascadeOnDelete();
         });
 
         // Fix column in sections table (Formerly course_levels)
         Schema::table('sections', function (Blueprint $table) {
-             // Pastikan course_id constraint tetap aman (biasanya aman saat rename table)
-             // Tidak perlu aksi khusus jika DB engine support rename (MySQL InnoDB support)
+            // Pastikan course_id constraint tetap aman (biasanya aman saat rename table)
+            // Tidak perlu aksi khusus jika DB engine support rename (MySQL InnoDB support)
         });
 
         // 3. Move Ownership (Instructor -> Course)
         $contentTables = ['materials', 'quizzes', 'assignments'];
 
         foreach ($contentTables as $tableName) {
-            Schema::table($tableName, function (Blueprint $table) use ($tableName) {
+            Schema::table($tableName, function (Blueprint $table) {
                 // Hapus FK ke User (Instructor)
                 // Kita gunakan array syntax agar Laravel mencari nama constraint otomatis
                 // [tableName]_instructor_id_foreign
                 if (Schema::hasColumn($table->getTable(), 'instructor_id')) {
-                     $table->dropForeign(['instructor_id']);
-                     $table->dropColumn('instructor_id');
+                    $table->dropForeign(['instructor_id']);
+                    $table->dropColumn('instructor_id');
                 }
 
                 // Tambah FK ke Courses
-                if (!Schema::hasColumn($table->getTable(), 'course_id')) {
+                if (! Schema::hasColumn($table->getTable(), 'course_id')) {
                     $table->foreignUuid('course_id')
-                          ->nullable() // Boleh null dulu untuk migrasi data lama
-                          ->after('id')
-                          ->constrained('courses')
-                          ->cascadeOnDelete();
+                        ->nullable() // Boleh null dulu untuk migrasi data lama
+                        ->after('id')
+                        ->constrained('courses')
+                        ->cascadeOnDelete();
                 }
             });
         }
@@ -104,9 +104,9 @@ return new class extends Migration
 
         // Restore FK lama
         Schema::table('level_items', function (Blueprint $table) {
-             $table->foreign('level_id')
-                  ->references('id')->on('course_levels')
-                  ->cascadeOnDelete();
+            $table->foreign('level_id')
+                ->references('id')->on('course_levels')
+                ->cascadeOnDelete();
         });
     }
 };

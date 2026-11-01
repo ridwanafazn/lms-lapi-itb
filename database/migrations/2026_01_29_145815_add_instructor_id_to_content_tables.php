@@ -11,7 +11,7 @@ return new class extends Migration
         // Tabel Materials
         if (Schema::hasTable('materials')) {
             Schema::table('materials', function (Blueprint $table) {
-                if (!Schema::hasColumn('materials', 'instructor_id')) {
+                if (! Schema::hasColumn('materials', 'instructor_id')) {
                     // Gunakan uuid() bukan foreignId() agar cocok dengan table users
                     $table->uuid('instructor_id')->nullable()->after('id');
                     $table->foreign('instructor_id')->references('id')->on('users')->onDelete('cascade');
@@ -22,7 +22,7 @@ return new class extends Migration
         // Tabel Quizzes
         if (Schema::hasTable('quizzes')) {
             Schema::table('quizzes', function (Blueprint $table) {
-                if (!Schema::hasColumn('quizzes', 'instructor_id')) {
+                if (! Schema::hasColumn('quizzes', 'instructor_id')) {
                     $table->uuid('instructor_id')->nullable()->after('id');
                     $table->foreign('instructor_id')->references('id')->on('users')->onDelete('cascade');
                 }
@@ -32,7 +32,7 @@ return new class extends Migration
         // Tabel Assignments
         if (Schema::hasTable('assignments')) {
             Schema::table('assignments', function (Blueprint $table) {
-                if (!Schema::hasColumn('assignments', 'instructor_id')) {
+                if (! Schema::hasColumn('assignments', 'instructor_id')) {
                     $table->uuid('instructor_id')->nullable()->after('id');
                     $table->foreign('instructor_id')->references('id')->on('users')->onDelete('cascade');
                 }

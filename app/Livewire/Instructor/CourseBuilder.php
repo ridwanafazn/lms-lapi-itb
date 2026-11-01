@@ -2,15 +2,15 @@
 
 namespace App\Livewire\Instructor;
 
+use App\Enums\CourseStatus;
+use App\Models\Assignment;
 use App\Models\Course;
-use App\Models\Section;
 use App\Models\Lesson;
 use App\Models\Material;
 use App\Models\Quiz;
-use App\Models\Assignment;
-use App\Enums\CourseStatus;
-use Livewire\Component;
+use App\Models\Section;
 use Livewire\Attributes\Layout;
+use Livewire\Component;
 
 #[Layout('layouts.course-workspace')]
 class CourseBuilder extends Component
@@ -18,6 +18,7 @@ class CourseBuilder extends Component
     public Course $course;
 
     public $editingSectionId = null;
+
     public $tempSectionTitle = '';
 
     public function mount(Course $course)
@@ -35,13 +36,14 @@ class CourseBuilder extends Component
                 ->with(['lessons.material', 'lessons.quiz', 'lessons.assignment'])
                 ->orderBy('order_index')
                 ->get(),
-            'backUrl' => $this->getBackUrl()
+            'backUrl' => $this->getBackUrl(),
         ]);
     }
 
     private function getBackUrl()
     {
         $program = $this->course->programs->first();
+
         return $program
             ? route('instructor.program.courses', $program->id)
             : route('instructor.programs');
@@ -53,7 +55,7 @@ class CourseBuilder extends Component
 
         $this->course->sections()->create([
             'title' => 'Bab Baru (Untitled)',
-            'order_index' => $maxOrder + 1
+            'order_index' => $maxOrder + 1,
         ]);
     }
 
@@ -85,14 +87,14 @@ class CourseBuilder extends Component
             'video' => 'Video Youtube',
             'google_drive_video' => 'Video GDrive',
             'google_drive_file' => 'File GDrive',
-            'live_session' => 'Live Session'
+            'live_session' => 'Live Session',
         ];
 
         $material = Material::create([
             'course_id' => $this->course->id,
-            'title' => 'Untitled ' . ($typeLabels[$type] ?? 'Materi'),
+            'title' => 'Untitled '.($typeLabels[$type] ?? 'Materi'),
             'type' => $type,
-            'status' => 'draft'
+            'status' => 'draft',
         ]);
 
         Lesson::create([
@@ -100,7 +102,7 @@ class CourseBuilder extends Component
             'item_type' => 'material',
             'material_id' => $material->id,
             'sort_order' => $maxOrder + 1,
-            'is_required' => true
+            'is_required' => true,
         ]);
     }
 
@@ -109,7 +111,7 @@ class CourseBuilder extends Component
         $section = Section::findOrFail($sectionId);
         $maxOrder = $section->lessons()->max('sort_order') ?? 0;
 
-        $title = 'Untitled ' . ucfirst($type);
+        $title = 'Untitled '.ucfirst($type);
         $content = null;
 
         if ($type === 'quiz') {
@@ -117,17 +119,19 @@ class CourseBuilder extends Component
                 'course_id' => $this->course->id,
                 'title' => $title,
                 'status' => 'draft',
-                'duration_minutes' => 10
+                'duration_minutes' => 10,
             ]);
         } elseif ($type === 'assignment') {
             $content = Assignment::create([
                 'course_id' => $this->course->id,
                 'title' => $title,
-                'deadline_days' => 3
+                'deadline_days' => 3,
             ]);
         }
 
-        if (!$content) return;
+        if (! $content) {
+            return;
+        }
 
         Lesson::create([
             'section_id' => $sectionId,
@@ -135,7 +139,7 @@ class CourseBuilder extends Component
             'quiz_id' => $type === 'quiz' ? $content->id : null,
             'assignment_id' => $type === 'assignment' ? $content->id : null,
             'sort_order' => $maxOrder + 1,
-            'is_required' => true
+            'is_required' => true,
         ]);
     }
 
@@ -162,18 +166,21 @@ class CourseBuilder extends Component
     {
         if (empty($this->course->description)) {
             session()->flash('error', 'Gagal: Deskripsi Course masih kosong. Silakan masuk ke tab "Course Identity" untuk melengkapinya terlebih dahulu.');
+
             return;
         }
 
         if ($this->course->sections()->count() === 0) {
             session()->flash('error', 'Gagal: Course harus memiliki minimal 1 Bab sebelum diajukan.');
+
             return;
         }
 
         $hasContent = $this->course->materials()->exists() || $this->course->quizzes()->exists() || $this->course->assignments()->exists();
 
-        if (!$hasContent) {
+        if (! $hasContent) {
             session()->flash('error', 'Gagal: Belum ada materi (Video/Teks/Zoom) yang ditambahkan ke dalam kurikulum.');
+
             return;
         }
 

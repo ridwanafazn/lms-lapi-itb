@@ -12,7 +12,7 @@ return new class extends Migration
             // Hapus kolom 'topic' yang lama (string)
             $table->dropColumn('topic');
             // Buat kolom 'topics' yang baru (json)
-            $table->json('topics')->nullable()->after('course_code'); 
+            $table->json('topics')->nullable()->after('course_code');
         });
     }
 

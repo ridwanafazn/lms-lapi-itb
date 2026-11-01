@@ -20,6 +20,7 @@ class AssignmentSubmissionService
     public const DISK = 'public';
 
     public const MAX_KILOBYTES = 20480; // 20 MB
+
     public const USER_QUOTA_KILOBYTES = 512000; // 500 MB total per user
 
     public const ALLOWED_EXTENSIONS = [
@@ -56,12 +57,14 @@ class AssignmentSubmissionService
         }
         $totalUsedBytes = \App\Models\Submission::where('user_id', $user->id)->get()->sum(function ($s) {
             $path = $s->file_url ? \Illuminate\Support\Facades\Storage::disk('public')->path($s->file_url) : null;
+
             return $path && file_exists($path) ? filesize($path) : 0;
         });
         $newFileBytes = $file->getSize();
         if (($totalUsedBytes + $newFileBytes) > self::USER_QUOTA_KILOBYTES * 1024) {
             $errors[] = 'Kuota upload total ('.number_format($totalUsedBytes / 1024 / 1024, 1).' MB / 500 MB) terlampaui.';
         }
+
         return $errors;
     }
 

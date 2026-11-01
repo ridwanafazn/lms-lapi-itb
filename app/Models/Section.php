@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -15,13 +15,14 @@ class Section extends Model
     protected $table = 'sections';
 
     public $incrementing = false;
+
     protected $keyType = 'string';
 
     protected $fillable = [
         'course_id',
         'title',
         'description',
-        'order_index'
+        'order_index',
     ];
 
     public function course(): BelongsTo

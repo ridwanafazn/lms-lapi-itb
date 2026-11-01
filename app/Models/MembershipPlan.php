@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class MembershipPlan extends Model
 {
     use HasFactory, HasUuids;
 
     public $incrementing = false;
+
     protected $keyType = 'string';
 
     protected $fillable = [
@@ -37,7 +38,7 @@ class MembershipPlan extends Model
 
     public function getDisplayNameAttribute(): string
     {
-        return ucfirst($this->level) . ' - ' . ucfirst($this->billing_period);
+        return ucfirst($this->level).' - '.ucfirst($this->billing_period);
     }
 
     public function scopeActive($query)

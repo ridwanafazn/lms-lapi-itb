@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('batch_id')->nullable()->change();
 
             $table->foreign('batch_id')
-                  ->references('id')
-                  ->on('batches')
-                  ->nullOnDelete();
+                ->references('id')
+                ->on('batches')
+                ->nullOnDelete();
         });
     }
 
@@ -33,9 +33,9 @@ return new class extends Migration
             $table->string('batch_id')->nullable(false)->change();
 
             $table->foreign('batch_id')
-                  ->references('id')
-                  ->on('batches')
-                  ->cascadeOnDelete();
+                ->references('id')
+                ->on('batches')
+                ->cascadeOnDelete();
         });
     }
 };

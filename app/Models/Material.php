@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use App\Traits\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -13,6 +13,7 @@ class Material extends Model
     use HasFactory, HasUuids;
 
     public $incrementing = false;
+
     protected $keyType = 'string';
 
     protected $fillable = [
@@ -29,7 +30,7 @@ class Material extends Model
         'start_time',
         'duration',
         'body_text',
-        'status'
+        'status',
     ];
 
     protected $casts = [
@@ -61,7 +62,7 @@ class Material extends Model
 
         if (preg_match($pattern, $url, $matches)) {
             // Return format embed standar + rel=0 (agar tidak menampilkan video dari channel lain setelah selesai)
-            return 'https://www.youtube.com/embed/' . $matches[1] . '?rel=0';
+            return 'https://www.youtube.com/embed/'.$matches[1].'?rel=0';
         }
 
         return $url;

@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::table('programs', function (Blueprint $table) {
             $table->enum('type', ['self_paced', 'cohort'])
-                  ->default('self_paced')
-                  ->after('price');
+                ->default('self_paced')
+                ->after('price');
         });
     }
 

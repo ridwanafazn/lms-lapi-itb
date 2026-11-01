@@ -15,17 +15,17 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
             $table->foreignUuid('quiz_attempt_id')
-                  ->constrained('quiz_attempts')
-                  ->cascadeOnDelete();
+                ->constrained('quiz_attempts')
+                ->cascadeOnDelete();
 
             $table->foreignUuid('question_id')
-                  ->constrained('questions')
-                  ->cascadeOnDelete();
+                ->constrained('questions')
+                ->cascadeOnDelete();
 
             $table->foreignUuid('question_option_id')
-                  ->nullable()
-                  ->constrained('question_options')
-                  ->nullOnDelete();
+                ->nullable()
+                ->constrained('question_options')
+                ->nullOnDelete();
 
             $table->longText('essay_answer')->nullable();
 

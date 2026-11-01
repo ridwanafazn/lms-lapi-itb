@@ -2,18 +2,20 @@
 
 namespace App\Livewire\Instructor;
 
-use App\Models\Quiz;
 use App\Models\Course;
-use Livewire\Component;
+use App\Models\Quiz;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
-use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
 
 #[Layout('layouts.app')]
 class Quizzes extends Component
 {
     public $showModal = false;
+
     public $isEdit = false;
+
     public $editingId = null;
 
     // Form Properties
@@ -35,16 +37,16 @@ class Quizzes extends Component
         $quizzes = Quiz::whereHas('course', function ($query) {
             $query->where('instructor_id', Auth::id());
         })
-        ->with('course') // Eager load untuk menampilkan nama course di tabel
-        ->latest()
-        ->get();
+            ->with('course') // Eager load untuk menampilkan nama course di tabel
+            ->latest()
+            ->get();
 
         // Ambil daftar course untuk dropdown create/edit
         $myCourses = Course::where('instructor_id', Auth::id())->get();
 
         return view('livewire.instructor.quizzes', [
             'quizzes' => $quizzes,
-            'courses' => $myCourses
+            'courses' => $myCourses,
         ]);
     }
 
@@ -58,7 +60,7 @@ class Quizzes extends Component
     {
         // Cari kuis dan pastikan pemilik course-nya adalah user yg login
         $quiz = Quiz::where('id', $id)
-            ->whereHas('course', function($q) {
+            ->whereHas('course', function ($q) {
                 $q->where('instructor_id', Auth::id());
             })->firstOrFail();
 
@@ -81,8 +83,9 @@ class Quizzes extends Component
             ->where('instructor_id', Auth::id())
             ->exists();
 
-        if (!$courseOwner) {
+        if (! $courseOwner) {
             $this->addError('course_id', 'Invalid Course selection.');
+
             return;
         }
 
@@ -102,7 +105,7 @@ class Quizzes extends Component
                 'passing_grade' => $this->passing_grade,
                 'status' => 'draft',
                 'is_randomized' => false,
-                'max_attempts' => 0
+                'max_attempts' => 0,
             ]);
         }
 
@@ -114,7 +117,7 @@ class Quizzes extends Component
     {
         // Delete dengan validasi kepemilikan
         $quiz = Quiz::where('id', $id)
-            ->whereHas('course', function($q) {
+            ->whereHas('course', function ($q) {
                 $q->where('instructor_id', Auth::id());
             })->first();
 

@@ -30,7 +30,7 @@ class PlayerAssignmentTest extends TestCase
 
         $user = User::create([
             'name' => 'Admin Uji',
-            'email' => 'admin-' . uniqid() . '@example.test',
+            'email' => 'admin-'.uniqid().'@example.test',
             'password' => 'password',
         ]);
 

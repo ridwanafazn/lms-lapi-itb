@@ -27,7 +27,7 @@ class PlayerQuizTest extends TestCase
 
         $user = User::create([
             'name' => 'Admin Kuis',
-            'email' => 'admin-quiz-' . uniqid() . '@example.test',
+            'email' => 'admin-quiz-'.uniqid().'@example.test',
             'password' => 'password',
         ]);
 

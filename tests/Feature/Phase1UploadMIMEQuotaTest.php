@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\Assignment;
-use App\Models\Course;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -19,10 +18,11 @@ class Phase1UploadMIMEQuotaTest extends TestCase
         Role::firstOrCreate(['name' => 'student', 'guard_name' => 'web']);
         $user = User::create([
             'name' => 'Student',
-            'email' => 'student-' . uniqid() . '@example.test',
+            'email' => 'student-'.uniqid().'@example.test',
             'password' => 'password',
         ]);
         $user->assignRole('student');
+
         return $user;
     }
 

@@ -2,8 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -19,12 +19,12 @@ return new class extends Migration
         DB::table('courses')->orderBy('id')->chunk(100, function ($courses) {
             foreach ($courses as $course) {
                 // Pecah string berdasarkan koma, lalu bersihkan spasi ekstra (trim)
-                $targets = $course->target_audience 
-                    ? array_filter(array_map('trim', explode(',', $course->target_audience))) 
+                $targets = $course->target_audience
+                    ? array_filter(array_map('trim', explode(',', $course->target_audience)))
                     : null;
-                
-                $prereqs = $course->prerequisites 
-                    ? array_filter(array_map('trim', explode(',', $course->prerequisites))) 
+
+                $prereqs = $course->prerequisites
+                    ? array_filter(array_map('trim', explode(',', $course->prerequisites)))
                     : null;
 
                 DB::table('courses')->where('id', $course->id)->update([
@@ -61,8 +61,8 @@ return new class extends Migration
                 $prereqsArr = $course->prerequisites ? json_decode($course->prerequisites, true) : [];
 
                 DB::table('courses')->where('id', $course->id)->update([
-                    'old_target_audience' => !empty($targetsArr) ? implode(', ', $targetsArr) : null,
-                    'old_prerequisites' => !empty($prereqsArr) ? implode(', ', $prereqsArr) : null,
+                    'old_target_audience' => ! empty($targetsArr) ? implode(', ', $targetsArr) : null,
+                    'old_prerequisites' => ! empty($prereqsArr) ? implode(', ', $prereqsArr) : null,
                 ]);
             }
         });

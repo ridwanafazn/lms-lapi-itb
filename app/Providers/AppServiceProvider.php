@@ -2,23 +2,22 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Auth\Notifications\VerifyEmail;
-use Illuminate\Notifications\Messages\MailMessage;
 use App\Models\Course;
+use App\Policies\AssignmentPolicy;
 use App\Policies\CoursePolicy;
 use App\Policies\LessonPolicy;
 use App\Policies\QuizPolicy;
-use App\Policies\AssignmentPolicy;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Filesystem\FilesystemAdapter;
-use League\Flysystem\Filesystem;
-use Masbug\Flysystem\GoogleDrive\GoogleDriveAdapter;
 use Google\Client;
 use Google\Service\Drive;
+use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Filesystem\FilesystemAdapter;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
-
+use Illuminate\Support\ServiceProvider;
+use League\Flysystem\Filesystem;
+use Masbug\Flysystem\GoogleDrive\GoogleDriveAdapter;
 // IMPORT MIDTRANS
 use Midtrans\Config;
 
@@ -32,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         if (app()->environment('local')) {
-        URL::forceScheme('https');
+            URL::forceScheme('https');
         }
         // 0. Konfigurasi Global Midtrans
         Config::$serverKey = config('services.midtrans.server_key');
@@ -74,19 +73,20 @@ class AppServiceProvider extends ServiceProvider
         try {
             Storage::extend('google', function ($app, $config) {
                 $jsonPath = $config['serviceAccount'];
-                if (!file_exists($jsonPath)) {
-                    throw new \Exception("File JSON Service Account TIDAK DITEMUKAN di: " . $jsonPath);
+                if (! file_exists($jsonPath)) {
+                    throw new \Exception('File JSON Service Account TIDAK DITEMUKAN di: '.$jsonPath);
                 }
-                $client = new Client();
+                $client = new Client;
                 $client->setAuthConfig($jsonPath);
                 $client->addScope(Drive::DRIVE);
                 $service = new Drive($client);
                 $adapter = new GoogleDriveAdapter($service, $config['folder'] ?? '/');
                 $driver = new Filesystem($adapter);
+
                 return new FilesystemAdapter($driver, $adapter);
             });
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::warning('Google Drive Adapter gagal dimuat: ' . $e->getMessage());
+            \Illuminate\Support\Facades\Log::warning('Google Drive Adapter gagal dimuat: '.$e->getMessage());
         }
     }
 }

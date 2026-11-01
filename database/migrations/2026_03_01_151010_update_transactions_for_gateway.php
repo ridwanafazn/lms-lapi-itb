@@ -31,7 +31,7 @@ return new class extends Migration
                 'gateway_payload',
                 'paid_at',
                 'expired_at',
-                'settlement_time'
+                'settlement_time',
             ]);
         });
     }

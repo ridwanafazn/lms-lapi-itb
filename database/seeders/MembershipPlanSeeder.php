@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\MembershipPlan;
+use Illuminate\Database\Seeder;
 
 class MembershipPlanSeeder extends Seeder
 {

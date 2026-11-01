@@ -2,29 +2,37 @@
 
 namespace App\Livewire\Instructor\Materials;
 
-use Livewire\Component;
 use App\Models\Material;
-use Illuminate\Validation\Rule;
+use Livewire\Component;
 
 class MaterialForm extends Component
 {
     public $isOpen = false;
+
     public $isEdit = false;
 
     public $materialId;
+
     public $sectionId;
 
     public $type = 'article';
+
     public $title;
+
     public $content;
 
     public $content_url;
 
     public $zoom_url;
+
     public $start_time;
+
     public $duration;
+
     public $meeting_id;
+
     public $meeting_passcode;
+
     public $meeting_platform = 'zoom';
 
     public $start_url;
@@ -40,7 +48,7 @@ class MaterialForm extends Component
             'content_url' => [
                 'nullable',
                 'required_if:type,video,google_drive_video,google_drive_file',
-                'url'
+                'url',
             ],
 
             'start_time' => 'nullable|required_if:type,live_session|date',
@@ -114,9 +122,9 @@ class MaterialForm extends Component
         // Jika Live Session, pastikan data yang butuh generate dibiarkan utuh/null
         // Instruktur tidak lagi men-generate Zoom di sini.
         if ($this->type === 'live_session') {
-             $data['meeting_id'] = $this->meeting_id;
-             $data['meeting_passcode'] = $this->meeting_passcode;
-             $data['zoom_url'] = $this->zoom_url;
+            $data['meeting_id'] = $this->meeting_id;
+            $data['meeting_passcode'] = $this->meeting_passcode;
+            $data['zoom_url'] = $this->zoom_url;
         }
 
         if ($this->isEdit) {

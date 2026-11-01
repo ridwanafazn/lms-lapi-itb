@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Enrollment extends Model
 {
     use HasFactory, HasUuids;
 
     public $incrementing = false;
+
     protected $keyType = 'string';
 
     protected $fillable = [
@@ -20,7 +21,7 @@ class Enrollment extends Model
         'enrolled_at',
         'access_expires_at',
         'status',
-        'progress_percentage'
+        'progress_percentage',
     ];
 
     protected $casts = [
@@ -53,10 +54,16 @@ class Enrollment extends Model
     {
         $entity = $this->enrollable;
 
-        if (!$entity) return 'Kelas Tanpa Judul';
+        if (! $entity) {
+            return 'Kelas Tanpa Judul';
+        }
 
-        if ($entity instanceof Program) return $entity->title ?? 'Program Tanpa Judul';
-        if ($entity instanceof Course) return $entity->title ?? 'Course Tanpa Judul';
+        if ($entity instanceof Program) {
+            return $entity->title ?? 'Program Tanpa Judul';
+        }
+        if ($entity instanceof Course) {
+            return $entity->title ?? 'Course Tanpa Judul';
+        }
 
         if ($entity instanceof Batch) {
             return $entity->course->title
@@ -72,7 +79,9 @@ class Enrollment extends Model
     {
         $entity = $this->enrollable;
 
-        if ($entity instanceof Course) return $entity->thumbnail_url;
+        if ($entity instanceof Course) {
+            return $entity->thumbnail_url;
+        }
 
         if ($entity instanceof Program) {
             return $entity->courses->first()?->thumbnail_url;
@@ -89,13 +98,19 @@ class Enrollment extends Model
     {
         $entity = $this->enrollable;
 
-        if (!$entity) return 'Tim Instruktur';
+        if (! $entity) {
+            return 'Tim Instruktur';
+        }
 
         $course = null;
 
-        if ($entity instanceof Program) $course = $entity->courses->first();
-        elseif ($entity instanceof Course) $course = $entity;
-        elseif ($entity instanceof Batch) $course = $entity->course ?? $entity->program?->courses->first();
+        if ($entity instanceof Program) {
+            $course = $entity->courses->first();
+        } elseif ($entity instanceof Course) {
+            $course = $entity;
+        } elseif ($entity instanceof Batch) {
+            $course = $entity->course ?? $entity->program?->courses->first();
+        }
 
         return $course ? ($course->instructor->name ?? 'Tim Instruktur') : 'Tim Instruktur';
     }
@@ -104,10 +119,16 @@ class Enrollment extends Model
     {
         $entity = $this->enrollable;
 
-        if (!$entity) return '-';
+        if (! $entity) {
+            return '-';
+        }
 
-        if ($entity instanceof Program) return $entity->title ?? '-';
-        if ($entity instanceof Course) return $entity->title ?? '-';
+        if ($entity instanceof Program) {
+            return $entity->title ?? '-';
+        }
+        if ($entity instanceof Course) {
+            return $entity->title ?? '-';
+        }
 
         return $entity->course->title ?? $entity->program->title ?? '-';
     }

@@ -2,10 +2,10 @@
 
 namespace App\Livewire\Student;
 
-use Livewire\Component;
-use Livewire\Attributes\Layout;
 use App\Models\Certificate as CertificateModel;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Layout;
+use Livewire\Component;
 
 class Certificate extends Component
 {
@@ -15,7 +15,7 @@ class Certificate extends Component
         // Untuk sementara, kita berikan notifikasi bahwa fitur sedang disiapkan.
         $this->dispatch('notify', [
             'message' => 'Sistem pembuat PDF sedang disiapkan. Mohon tunggu update selanjutnya!',
-            'type' => 'warning'
+            'type' => 'warning',
         ]);
     }
 
@@ -30,7 +30,7 @@ class Certificate extends Component
             ->get();
 
         return view('livewire.student.certificate', [
-            'certificates' => $certificates
+            'certificates' => $certificates,
         ]);
     }
 }

@@ -2,43 +2,56 @@
 
 namespace App\Livewire\Student\Discussion;
 
-use Livewire\Component;
-use Livewire\WithPagination;
-use Livewire\WithFileUploads;
 use App\Models\Course;
 use App\Models\Discussion;
 use App\Models\DiscussionReply;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Livewire\Component;
+use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class CourseDiscussion extends Component
 {
-    use WithPagination, WithFileUploads;
+    use WithFileUploads, WithPagination;
 
     public Course $course;
 
     // --- VIEW STATE ---
     public $viewState = 'list';
+
     public $selectedDiscussionId = null;
 
     // --- FILTERS ---
     public $search = '';
+
     public $filterStatus = 'all';
+
     public $sort = 'latest';
 
     // --- FORM INPUTS ---
     public $newTitle = '';
+
     public $newBody = '';
+
     public $newAttachments = [];
 
     public $replyBody = '';
+
     public $replyAttachments = [];
 
     protected $listeners = ['refreshComponent' => '$refresh'];
 
-    public function updatedSearch() { $this->resetPage(); }
-    public function updatedFilterStatus() { $this->resetPage(); }
+    public function updatedSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedFilterStatus()
+    {
+        $this->resetPage();
+    }
 
     // --- ACTIONS: NAVIGATION ---
 
@@ -118,11 +131,14 @@ class CourseDiscussion extends Component
             'replyAttachments.required_without' => 'Tulis pesan atau lampirkan gambar.',
         ]);
 
-        if (!$this->selectedDiscussionId) return;
+        if (! $this->selectedDiscussionId) {
+            return;
+        }
 
         $discussion = Discussion::find($this->selectedDiscussionId);
         if ($discussion && $discussion->is_solved) {
             $this->addError('replyBody', 'Diskusi ini sudah ditutup.');
+
             return;
         }
 
@@ -142,7 +158,9 @@ class CourseDiscussion extends Component
     // Helper: Simpan file fisik & record database manual
     private function processAttachments($model, $attachments)
     {
-        if (empty($attachments)) return;
+        if (empty($attachments)) {
+            return;
+        }
 
         foreach ($attachments as $file) {
             $path = $file->store('discussion-attachments', 'public');
@@ -176,7 +194,7 @@ class CourseDiscussion extends Component
     {
         $discussion = Discussion::find($discussionId);
         if ($discussion && $discussion->user_id === Auth::id()) {
-            $discussion->is_solved = !$discussion->is_solved;
+            $discussion->is_solved = ! $discussion->is_solved;
             $discussion->save();
         }
     }
@@ -210,18 +228,25 @@ class CourseDiscussion extends Component
 
         // Apply Filters
         if ($this->search) {
-            $query->where(function($q) {
-                $q->where('title', 'like', '%' . $this->search . '%')
-                  ->orWhere('body', 'like', '%' . $this->search . '%');
+            $query->where(function ($q) {
+                $q->where('title', 'like', '%'.$this->search.'%')
+                    ->orWhere('body', 'like', '%'.$this->search.'%');
             });
         }
 
-        if ($this->filterStatus === 'solved') $query->where('is_solved', true);
-        elseif ($this->filterStatus === 'unsolved') $query->where('is_solved', false);
+        if ($this->filterStatus === 'solved') {
+            $query->where('is_solved', true);
+        } elseif ($this->filterStatus === 'unsolved') {
+            $query->where('is_solved', false);
+        }
 
-        if ($this->sort === 'oldest') $query->orderBy('created_at', 'asc');
-        elseif ($this->sort === 'most_replies') $query->orderBy('replies_count', 'desc');
-        else $query->orderBy('created_at', 'desc');
+        if ($this->sort === 'oldest') {
+            $query->orderBy('created_at', 'asc');
+        } elseif ($this->sort === 'most_replies') {
+            $query->orderBy('replies_count', 'desc');
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
 
         $discussions = $query->paginate(10);
 
@@ -236,7 +261,7 @@ class CourseDiscussion extends Component
         // 3. RETURN VIEW WITH BOTH DATA
         return view('livewire.student.discussion.course-discussion', [
             'discussions' => $discussions,        // Wajib untuk Sidebar Kiri
-            'discussion' => $activeDiscussion     // Opsional untuk Panel Kanan
+            'discussion' => $activeDiscussion,     // Opsional untuk Panel Kanan
         ]);
     }
 }

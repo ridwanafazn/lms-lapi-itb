@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use App\Traits\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use App\Traits\HasUuids;
 
 class Media extends Model
 {
@@ -15,6 +15,7 @@ class Media extends Model
 
     // Konfigurasi Primary Key UUID
     public $incrementing = false;
+
     protected $keyType = 'string';
 
     protected $fillable = [

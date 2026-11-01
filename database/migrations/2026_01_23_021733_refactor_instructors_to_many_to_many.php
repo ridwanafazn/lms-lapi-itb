@@ -16,9 +16,9 @@ return new class extends Migration
         // 2. Hapus kolom legacy di courses/batches jika masih ada
         // (Kita lakukan check dulu agar tidak error jika sudah dihapus)
         if (Schema::hasColumn('courses', 'instructor_id')) {
-             // Opsional: Anda bisa memilih untuk MEMPERTAHANKAN instructor_id sebagai "Creator"
-             // Jika ingin dihapus, uncomment baris di bawah:
-             // Schema::table('courses', function (Blueprint $table) { $table->dropForeign(['instructor_id']); $table->dropColumn('instructor_id'); });
+            // Opsional: Anda bisa memilih untuk MEMPERTAHANKAN instructor_id sebagai "Creator"
+            // Jika ingin dihapus, uncomment baris di bawah:
+            // Schema::table('courses', function (Blueprint $table) { $table->dropForeign(['instructor_id']); $table->dropColumn('instructor_id'); });
         }
 
         if (Schema::hasColumn('batches', 'main_instructor_id')) {
@@ -29,7 +29,7 @@ return new class extends Migration
         }
 
         // 3. Buat Tabel Polimorfik Tunggal: 'instructors'
-        if (!Schema::hasTable('instructors')) {
+        if (! Schema::hasTable('instructors')) {
             Schema::create('instructors', function (Blueprint $table) {
                 $table->uuid('id')->primary();
 

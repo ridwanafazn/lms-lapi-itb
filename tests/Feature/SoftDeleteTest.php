@@ -41,7 +41,7 @@ class SoftDeleteTest extends TestCase
         $batch = Batch::create(['batch_name' => 'Batch Dihapus']);
         $user = User::create([
             'name' => 'Pengguna Dihapus',
-            'email' => 'hapus-' . uniqid() . '@example.test',
+            'email' => 'hapus-'.uniqid().'@example.test',
             'password' => 'password',
         ]);
 

@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
         UserProfile::create([
             'user_id' => $admin->id,
             'full_name' => 'Administrator Sistem',
-            'agency_name' => 'LMS Admin'
+            'agency_name' => 'LMS Admin',
         ]);
 
         // ---------------------------------------------------------
@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
         UserProfile::create([
             'user_id' => $instructor->id,
             'full_name' => 'Pemateri Utama',
-            'agency_name' => 'Expert Instructor'
+            'agency_name' => 'Expert Instructor',
         ]);
 
         // ---------------------------------------------------------
@@ -66,14 +66,14 @@ class DatabaseSeeder extends Seeder
             'reza',
             'kinan',
             'alika',
-            'kamila'
+            'kamila',
         ];
 
         foreach ($studentsList as $name) {
             // Buat User
             $student = User::create([
                 'name' => ucfirst($name), // Huruf pertama kapital
-                'email' => $name . '@lms.com',
+                'email' => $name.'@lms.com',
                 'password' => $passwordDefault,
                 'email_verified_at' => now(),
             ]);
@@ -85,7 +85,7 @@ class DatabaseSeeder extends Seeder
             UserProfile::create([
                 'user_id' => $student->id,
                 'full_name' => ucfirst($name),
-                'agency_name' => 'Peserta Bootcamp'
+                'agency_name' => 'Peserta Bootcamp',
             ]);
         }
     }

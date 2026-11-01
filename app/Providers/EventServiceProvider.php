@@ -5,9 +5,9 @@ namespace App\Providers;
 use App\Events\TransactionPaid;
 use App\Listeners\ActivateMembership;
 use App\Listeners\FulfillEnrollment;
+use App\Listeners\LogDomainEvent;
 use App\Listeners\RecordPaymentActivity;
 use App\Listeners\SendPaymentConfirmation;
-use App\Listeners\LogDomainEvent;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider

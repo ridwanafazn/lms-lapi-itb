@@ -17,8 +17,8 @@ return new class extends Migration
             $table->json('what_is_included')->nullable()->after('faq');
             $table->string('enrollment_code')->unique()->nullable()->after('title');
             $table->string('pdf_brochure_url')->nullable()->after('is_active');
-            $table->string('status')->default('draft')->after('pdf_brochure_url'); 
-            $table->decimal('rating_avg', 3, 2)->default(0.00)->after('price'); 
+            $table->string('status')->default('draft')->after('pdf_brochure_url');
+            $table->decimal('rating_avg', 3, 2)->default(0.00)->after('price');
         });
     }
 
@@ -36,7 +36,7 @@ return new class extends Migration
                 'enrollment_code',
                 'pdf_brochure_url',
                 'status',
-                'rating_avg'
+                'rating_avg',
             ]);
         });
     }

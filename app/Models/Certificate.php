@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Carbon\Carbon;
 
 class Certificate extends Model
 {
     use HasFactory, HasUuids;
 
     public $incrementing = false;
+
     protected $keyType = 'string';
 
     protected $fillable = [
@@ -22,7 +23,7 @@ class Certificate extends Model
         'certificate_code',
         'formal_number',
         'issued_at',
-        'file_url'
+        'file_url',
     ];
 
     protected $casts = [
@@ -46,7 +47,7 @@ class Certificate extends Model
                 // Konversi bulan ke format Romawi
                 $romanMonths = [
                     1 => 'I', 2 => 'II', 3 => 'III', 4 => 'IV', 5 => 'V', 6 => 'VI',
-                    7 => 'VII', 8 => 'VIII', 9 => 'IX', 10 => 'X', 11 => 'XI', 12 => 'XII'
+                    7 => 'VII', 8 => 'VIII', 9 => 'IX', 10 => 'X', 11 => 'XI', 12 => 'XII',
                 ];
                 $romanMonth = $romanMonths[$month];
 

@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
 
             $table->foreignUuid('user_id')
-                  ->constrained('users')
-                  ->cascadeOnDelete();
+                ->constrained('users')
+                ->cascadeOnDelete();
 
             $table->foreignUuid('lesson_id')
-                  ->constrained('lessons')
-                  ->cascadeOnDelete();
+                ->constrained('lessons')
+                ->cascadeOnDelete();
 
             $table->timestamp('completed_at')->useCurrent();
             $table->timestamps();

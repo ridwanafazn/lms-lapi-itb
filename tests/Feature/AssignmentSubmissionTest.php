@@ -20,7 +20,7 @@ class AssignmentSubmissionTest extends TestCase
     {
         return User::create([
             'name' => 'Siswa Tugas',
-            'email' => 'siswa-' . uniqid() . '@example.test',
+            'email' => 'siswa-'.uniqid().'@example.test',
             'password' => 'password',
         ]);
     }

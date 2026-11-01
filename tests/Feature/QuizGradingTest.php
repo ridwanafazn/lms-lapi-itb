@@ -21,7 +21,7 @@ class QuizGradingTest extends TestCase
     {
         return User::create([
             'name' => 'Siswa Kuis',
-            'email' => 'kuis-' . uniqid() . '@example.test',
+            'email' => 'kuis-'.uniqid().'@example.test',
             'password' => 'password',
         ]);
     }

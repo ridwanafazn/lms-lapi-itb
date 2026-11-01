@@ -13,9 +13,9 @@ return new class extends Migration
             $table->timestamp('membership_expires_at')->nullable()->after('membership_plan_id');
 
             $table->foreign('membership_plan_id')
-                  ->references('id')
-                  ->on('membership_plans')
-                  ->onDelete('set null');
+                ->references('id')
+                ->on('membership_plans')
+                ->onDelete('set null');
         });
     }
 

@@ -16,8 +16,8 @@ class MembershipAccessTest extends TestCase
     private function userWithPlan(?string $level, ?string $expiresIn = '+1 month'): User
     {
         $user = User::create([
-            'name' => 'Member ' . $level,
-            'email' => 'member-' . uniqid() . '@example.test',
+            'name' => 'Member '.$level,
+            'email' => 'member-'.uniqid().'@example.test',
             'password' => 'password',
         ]);
 
@@ -42,7 +42,7 @@ class MembershipAccessTest extends TestCase
     private function program(string $level, ?string $planId = null): Program
     {
         return Program::create([
-            'title' => 'Program ' . $level,
+            'title' => 'Program '.$level,
             'price' => 1_000_000,
             'min_membership_level' => $level,
             'required_membership_plan_id' => $planId,
