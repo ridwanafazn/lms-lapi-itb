@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply font-body text-gray-900;
+    }
+    input[type="password"]::-ms-reveal,
+    input[type="password"]::-ms-clear {
+        display: none;
+    }
+}
+
+@layer utilities {
+    .will-transform {
+        will-change: transform;
+    }
+}
+
+/* Phase 3.3 — smooth micro-interactions (GPU-friendly: opacity/transform only) */
+@layer components {
+    @keyframes loading-slide {
+        0% { transform: translateX(-120%); }
+        100% { transform: translateX(420%); }
+    }
+
+    @keyframes content-fade-in {
+        from { opacity: 0; transform: translateY(6px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .content-enter {
+        animation: content-fade-in 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+        will-change: opacity, transform;
+    }
+
+    /* Livewire swaps: soft fade instead of an abrupt jump */
+    [wire\:loading].opacity-50 {
+        transition: opacity 150ms ease-out;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .content-enter,
+    .animate-\[loading-slide_1s_ease-in-out_infinite\] {
+        animation: none !important;
+        transition: none !important;
+    }
+}
