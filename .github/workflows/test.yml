@@ -53,6 +53,9 @@ jobs:
       - name: Check code style
         run: vendor/bin/pint --test
 
+      - name: Build frontend
+        run: npm ci && npm run build
+
       - name: Run test suite
         run: php artisan test
         env:
@@ -61,6 +64,3 @@ jobs:
           DB_DATABASE: sbu_test
           DB_USERNAME: root
           DB_PASSWORD: root
-
-      - name: Build frontend
-        run: npm ci && npm run build
